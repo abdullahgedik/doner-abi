@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class PlayerInteractionController : MonoBehaviour
 {
-    private void Start()
+    [SerializeField] private Transform _rayPoint;
+
+    private PlayerMovementController _movementController;
+
+    private bool _isInteracting = false;
+
+    private void Awake()
     {
-        
+        _movementController = GetComponent<PlayerMovementController>();
     }
 
     private void Update()
@@ -14,21 +20,22 @@ public class PlayerInteractionController : MonoBehaviour
         if (!Input.GetKeyDown(KeyCode.E))
             return;
 
-        InteractWithObject();
+        _isInteracting = InteractWithObject();
     }
 
-    private void InteractWithObject()
+    private bool InteractWithObject()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.up, 10f);
+        RaycastHit2D hit = Physics2D.Raycast(_rayPoint.position, Vector2.up, 20f);
 
         if (hit.collider == null)
-            return;
+            return false;
 
         IInteractable interactable = hit.collider.GetComponent<IInteractable>();
 
         if (interactable == null)
-            return;
+            return false;
 
         interactable.Interact();
+        return true;
     }
 }
