@@ -10,26 +10,26 @@ public class FoodMachineScriptableObject : ScriptableObject
     public struct ProductionCostTimeUpgrade
     {
         [SerializeField]
-        public float cost;
+        public float upgradeCost;
         [SerializeField]
-        public float productionTime;
+        public float productionCost;
     }
 
     [SerializeField] public FoodIngredient _foodIngredient;
-    [SerializeField] public List<ProductionCostTimeUpgrade> _productionTimeLevels;
+    [SerializeField] public List<ProductionCostTimeUpgrade> _productionCostLevels;
 
     public FoodType GetFoodType()
     {
         return _foodIngredient.foodType;
     }
 
-    public float GetCost(int level)
+    public float GetUpgradeCost(int level)
     {
-        return _productionTimeLevels[level - 1].cost;
+        return _productionCostLevels[level - 1].upgradeCost;
     }
 
-    public float GetProductionTime(int level)
+    public float GetProductionCost(int level)
     {
-        return _productionTimeLevels[level - 1].productionTime;
+        return _productionCostLevels[level - 1].productionCost;
     }
 }

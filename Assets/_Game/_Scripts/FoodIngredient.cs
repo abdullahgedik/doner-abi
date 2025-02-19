@@ -16,7 +16,7 @@ public enum FoodType
 {
     Meat,
     Chicken,
-    Tomate,
+    Tomato,
     Lettuce,
     Pickles,
     Bread,

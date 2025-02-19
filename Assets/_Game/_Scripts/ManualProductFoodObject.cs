@@ -4,33 +4,65 @@ using UnityEngine;
 
 public class ManualProductFoodObject : FoodObjectBase
 {
-    private bool _isProducingFood = false;
-    
+    private int _productionPhase = 0;
+
+    void Start()
+    {
+        UpdateFoodAmountText();
+        UpdateProgressBar();
+    }
+
     public override void Interact()
     {
-        ProduceFood();
-    }
-
-    private void ProduceFood()
-    {
-        _isProducingFood = true;
-
-        StartCoroutine(ProduceFoodRoutine());
-    }
-
-    private IEnumerator ProduceFoodRoutine()
-    {
-        while (_isProducingFood)
+        if(_isBroken)
         {
-            yield return new WaitForSeconds(_productionDuration);
-            Debug.Log("Food produced");
-            _isProducingFood = false;
-            TakeFood();
+            TryFix();
+            return;
+        }
+
+        TryProduceFood();
+    }
+
+    public override void PickUp()
+    {
+        TakeFood();
+    }
+
+    private void TryProduceFood()
+    {
+        _productionPhase++;
+        UpdateProgressBar();
+
+        if (_productionPhase == _productionCost)
+        {
+            _productionPhase = 0;
+            UpdateProgressBar();
+            ProduceFood();
         }
     }
 
     protected override void TakeFood()
     {
+        if (_foodAmount == 0)
+            return;
+
+        Punch();
+
+        _foodAmount--;
+        UpdateFoodAmountText();
+
         Debug.Log("Taking food");
+    }
+
+    protected override void ProduceFood()
+    {
+        _foodAmount++;
+        Punch();
+        UpdateFoodAmountText();
+    }
+
+    protected override void UpdateProgressBar()
+    {
+        _progressBarImage.fillAmount = _productionPhase / _productionCost;
     }
 }
