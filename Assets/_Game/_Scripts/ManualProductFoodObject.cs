@@ -5,6 +5,7 @@ using UnityEngine;
 public class ManualProductFoodObject : FoodObjectBase
 {
     private int _productionPhase = 0;
+    public ProducedFood producedFoodPrefab;
 
     void Start()
     {
@@ -52,6 +53,7 @@ public class ManualProductFoodObject : FoodObjectBase
         UpdateFoodAmountText();
 
         Debug.Log("Taking food");
+        Instantiate(producedFoodPrefab, transform.position, Quaternion.identity);
     }
 
     protected override void ProduceFood()

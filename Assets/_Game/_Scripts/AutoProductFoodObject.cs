@@ -5,6 +5,7 @@ using UnityEngine;
 public class AutoProductFoodObject : FoodObjectBase
 {
     private float _productionPhase = 0;
+    public ProducedFood producedFoodPrefab;
 
     private void Start()
     {
@@ -48,11 +49,11 @@ public class AutoProductFoodObject : FoodObjectBase
             return;
 
         Punch();
-        
         _foodAmount--;
         UpdateFoodAmountText();
 
         Debug.Log("Taking food");
+        Instantiate(producedFoodPrefab, transform.position, Quaternion.identity);
     }
 
     private IEnumerator AutoProduceFoodRoutine()
