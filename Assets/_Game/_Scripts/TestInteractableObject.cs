@@ -9,11 +9,4 @@ public class TestInteractableObject : FoodObjectBase
     {
         Punch();
     }
-
-    private void Punch()
-    {
-        transform.DOKill();
-        transform.localScale = Vector3.one;
-        transform.DOPunchScale(Vector3.one * 0.1f, 0.25f);
-    }
 }

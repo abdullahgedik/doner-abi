@@ -13,14 +13,16 @@ public class FoodMachineScriptableObject : ScriptableObject
         public float upgradeCost;
         [SerializeField]
         public float productionCost;
+        [SerializeField]
+        public float productCapacity;
     }
 
-    [SerializeField] public FoodIngredient _foodIngredient;
+    [SerializeField] public FoodType _foodType;
     [SerializeField] public List<ProductionCostTimeUpgrade> _productionCostLevels;
 
     public FoodType GetFoodType()
     {
-        return _foodIngredient.foodType;
+        return _foodType;
     }
 
     public float GetUpgradeCost(int level)

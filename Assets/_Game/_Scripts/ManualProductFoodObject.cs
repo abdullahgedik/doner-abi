@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ManualProductFoodObject : FoodObjectBase
 {
-    private int _productionPhase = 0;
     public ProducedFood producedFoodPrefab;
 
     void Start()
@@ -61,10 +60,5 @@ public class ManualProductFoodObject : FoodObjectBase
         _foodAmount++;
         Punch();
         UpdateFoodAmountText();
-    }
-
-    protected override void UpdateProgressBar()
-    {
-        _progressBarImage.fillAmount = _productionPhase / _productionCost;
     }
 }

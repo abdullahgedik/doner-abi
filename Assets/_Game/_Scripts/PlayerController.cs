@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         _movementController = GetComponent<PlayerMovementController>();
         _interactionController = GetComponent<PlayerInteractionController>();
+        
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
 

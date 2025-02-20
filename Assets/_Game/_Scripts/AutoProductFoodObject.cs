@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class AutoProductFoodObject : FoodObjectBase
 {
-    private float _productionPhase = 0;
     public ProducedFood producedFoodPrefab;
+    private bool _isProducing = false;
 
     private void Start()
     {
         UpdateFoodAmountText();
         UpdateProgressBar();
-        StartCoroutine(AutoProduceFoodRoutine());
     }
 
     private void Update()
     {
+        if (_isBroken)
+            return;
+
+        if (!_isProducing)
+            return;
+        
         if (_productionPhase >= _productionCost)
         {
             _productionPhase = 0;
+            ProduceFood();
         }
 
         _productionPhase += Time.deltaTime;
@@ -54,20 +60,5 @@ public class AutoProductFoodObject : FoodObjectBase
 
         Debug.Log("Taking food");
         Instantiate(producedFoodPrefab, transform.position, Quaternion.identity);
-    }
-
-    private IEnumerator AutoProduceFoodRoutine()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(_productionCost);
-            ProduceFood();
-            Debug.Log("Auto producing food");
-        }
-    }
-
-    protected override void UpdateProgressBar()
-    {
-        _progressBarImage.fillAmount = _productionPhase / _productionCost;
     }
 }

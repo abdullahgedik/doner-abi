@@ -5,23 +5,22 @@ using UnityEngine;
 public class PlayerInteractionController : MonoBehaviour
 {
     [SerializeField] private Transform _rayPoint;
+    [SerializeField] private Transform _carryPoint;
 
-    private bool _isInteracting = false;
+    private ProducedFood _carriedObject;
 
     private void Awake()
     {
-        
+
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
             InteractWithObject();
-
-        if (Input.GetKeyDown(KeyCode.F))
+        else if (Input.GetKeyDown(KeyCode.F))
             PickUpFoodObject();
-
-        if (Input.GetKeyDown(KeyCode.G))
+        else if (Input.GetKeyDown(KeyCode.G))
             DropFoodObject();
     }
 
@@ -41,24 +40,37 @@ public class PlayerInteractionController : MonoBehaviour
         return;
     }
 
+    // private void PickUpFoodObject()
+    // {
+    //     RaycastHit2D hit = Physics2D.Raycast(_rayPoint.position, Vector2.up, 20f);
+
+    //     if (hit.collider == null)
+    //         return;
+
+    //     IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+
+    //     if (interactable == null)
+    //         return;
+
+    //     interactable.PickUp();
+    //     return;
+    // }
+
     private void PickUpFoodObject()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_rayPoint.position, Vector2.up, 20f);
+        var collider = Physics2D.OverlapCircle(transform.position, 1.5f);
 
-        if (hit.collider == null)
-            return;
-
-        IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-
-        if (interactable == null)
-            return;
-
-        interactable.PickUp();
-        return;
+        if (collider.TryGetComponent(out ProducedFood producedFood))
+        {
+            _carriedObject = producedFood;
+            _carriedObject.transform.SetParent(_carryPoint);
+            _carriedObject.transform.localPosition = Vector3.zero;
+            _carriedObject.SetKinematic(true);
+        }
     }
 
     private void DropFoodObject()
     {
-        
+
     }
 }

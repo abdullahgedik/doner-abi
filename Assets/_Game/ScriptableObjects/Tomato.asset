@@ -17,3 +17,4 @@ MonoBehaviour:
   _productionCostLevels:
   - upgradeCost: 0
     productionCost: 4
+    productCapacity: 8
